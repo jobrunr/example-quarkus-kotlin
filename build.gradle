@@ -1,0 +1,75 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version "2.1.21"
+    id "org.jetbrains.kotlin.plugin.allopen" version "2.1.21"
+    id 'org.jetbrains.kotlin.plugin.serialization' version '2.1.21'
+    id 'io.quarkus'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    // Quarkus core
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-arc'
+    implementation 'io.quarkus:quarkus-smallrye-health' // needed for the JobRunr + Quarkus extension
+
+    // Kotlin + kotlinx-serialization (also see plugins on top)
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0'
+
+    // Quarkus + Kotlin compatibility
+    implementation 'io.quarkus:quarkus-kotlin'
+    implementation 'io.quarkus:quarkus-rest-kotlin-serialization' // without this, no HTTP server will start
+    implementation 'io.quarkus:quarkus-rest-client-kotlin-serialization'
+
+    // Databases
+    implementation 'io.quarkus:quarkus-jdbc-h2'
+    // Required for the dataSource bean creation
+    implementation 'io.quarkus:quarkus-agroal'
+
+    // does not work: you cannot mix Quarkus REST and RESTEasy Classic server parts
+    // implementation 'io.quarkus:quarkus-resteasy-jsonb'
+
+    // JobRunr
+    implementation 'org.jobrunr:jobrunr:1.0.0-SNAPSHOT'
+
+    // JobRunr + Quarkus extension
+    implementation 'org.jobrunr:quarkus-jobrunr:1.0.0-SNAPSHOT'
+
+    // JobRunr + Kotlin compatibility
+    implementation 'org.jobrunr:jobrunr-kotlin-2.1-support:1.0.0-SNAPSHOT'
+
+
+
+    testImplementation 'io.quarkus:quarkus-junit5'
+}
+
+group 'org.jobrunr'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+}
+allOpen {
+    annotation("jakarta.ws.rs.Path")
+    annotation("jakarta.enterprise.context.ApplicationScoped")
+    annotation("jakarta.persistence.Entity")
+    annotation("io.quarkus.test.junit.QuarkusTest")
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_21
+    kotlinOptions.javaParameters = true
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_21
+}
