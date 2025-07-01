@@ -34,13 +34,13 @@ dependencies {
     // implementation 'io.quarkus:quarkus-resteasy-jsonb'
 
     // JobRunr
-    implementation 'org.jobrunr:jobrunr:1.0.0-SNAPSHOT'
+    implementation 'org.jobrunr:jobrunr:8.0.0'
 
     // JobRunr + Quarkus extension
-    implementation 'org.jobrunr:quarkus-jobrunr:1.0.0-SNAPSHOT'
+    implementation 'org.jobrunr:quarkus-jobrunr:8.0.0'
 
     // JobRunr + Kotlin compatibility
-    implementation 'org.jobrunr:jobrunr-kotlin-2.1-support:1.0.0-SNAPSHOT'
+    implementation 'org.jobrunr:jobrunr-kotlin-2.1-support:8.0.0'
 
 
 

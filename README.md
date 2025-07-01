@@ -1,58 +1,37 @@
-# example-quarkus-kotlin
+# JobRunr Quarkus + Kotlin(x) example
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This repository shows an example how you can integrate JobRunr, [Quarkus](https://quarkus.io/), and [Kotlin JSON Serialization](https://kotlinlang.org/docs/serialization.html).
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+If you are looking for an example on how to integrate JobRunr into a Java Quarkus project, 
+please take a look at our pure Java example project: https://github.com/jobrunr/example-quarkus/. 
 
-## Running the application in dev mode
+## About this project
 
-You can run your application in dev mode that enables live coding using:
+This project shows how to let Quarkus + Kotlin + JobRunr play along nicely. 
 
-```shell script
-./gradlew quarkusDev
-```
+> For more information on how JobRunr integrates with Quarkus, please see our **extension documentation** located at https://www.jobrunr.io/en/documentation/configuration/quarkus/.
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+The `build.gradle` file listing the dependencies is the most important one to inspect here, that lists the following groups of dependencies:
 
-## Packaging and running the application
+1. **Quarkus core** dependencies: your usual, including `smallrye-health` for monitoring as a requirement for the JobRunr Quarkus extension.
+2. **Kotlin + kotlinx-serialization** dependencies.
+3. **DataSources**: H2 and Quarkus's Agroal that creates a `dataSource` bean needed for JobRunr.
+4. **JobRunr** core + Kotlin compatibility + Quarkus compatibility.
 
-The application can be packaged using:
+⚠️ Make sure NOT to include RESTEasy or any of the other JSON serializers such as Jackson as they clash with our current combination of dependencies. 
 
-```shell script
-./gradlew build
-```
+If you're unsure on which versions of `kotlinx-serialization-json` and Kotlin to pick, see our serialization support announcement at https://www.jobrunr.io/en/guides/migration/v8/#kotlin-serialisation-support.
+Only JobRunr v8 and up support Kotlin serialization. 
 
-It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
+## How to run this project
 
-The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
+1. clone the project
+2. Run the `quarkusDev` Gradle task or let your favourite IDE do the heavy lifting for you
+3. Open your favorite browser:
+    - Navigate to the JobRunr dashboard located at http://localhost:8000/dashboard.
+    - To enqueue a simple job, open a new tab and go to http://localhost:8080/jobs/ and take it for there.
+    - Visit the dashboard again and see the jobs being processed!
 
-If you want to build an _über-jar_, execute the following command:
+### Compiling it natively
 
-```shell script
-./gradlew build -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar build/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./gradlew build -Dquarkus.native.enabled=true
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./build/example-quarkus-kotlin-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/gradle-tooling>.
-
-## Related Guides
-
-- Kotlin ([guide](https://quarkus.io/guides/kotlin)): Write your services in Kotlin
+For information on how to compile Quarkus + JobRunr using GraalVM, see our pure Java example project example at https://github.com/jobrunr/example-quarkus/.
