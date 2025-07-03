@@ -33,15 +33,11 @@ dependencies {
     // does not work: you cannot mix Quarkus REST and RESTEasy Classic server parts
     // implementation 'io.quarkus:quarkus-resteasy-jsonb'
 
-    // JobRunr
-    implementation 'org.jobrunr:jobrunr:8.0.0'
-
-    // JobRunr + Quarkus extension
+    // JobRunr + Quarkus extension (includes JobRunr itself as a dependency)
     implementation 'org.jobrunr:quarkus-jobrunr:8.0.0'
 
     // JobRunr + Kotlin compatibility
     implementation 'org.jobrunr:jobrunr-kotlin-2.1-support:8.0.0'
-
 
 
     testImplementation 'io.quarkus:quarkus-junit5'
