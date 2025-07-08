@@ -32,7 +32,7 @@ class JobResource {
     @Produces(MediaType.TEXT_PLAIN)
     fun simpleJobUsingInstance(@DefaultValue("Hello world") @QueryParam("value") value: String?): String {
         // This will crash in native mode (see README.md)
-        val enqueuedJobId = jobScheduler!!.enqueue(JobLambda { myService.doSimpleJob(value) })
+        val enqueuedJobId = jobScheduler.enqueue(JobLambda { myService.doSimpleJob(value) })
         return "Job Enqueued: $enqueuedJobId - see http://localhost:8000/dashboard to monitor the job."
     }
 
